@@ -1,3 +1,18 @@
+-- CREATION
+
+CREATE TABLE Persons (
+    PersonID int ,
+    LastName varchar(255),
+    FirstName varchar(255),
+    Address varchar(255),
+    City varchar(255)
+);
+INSERT INTO Persons(PersonID,LastName,FirstName,Address,City)
+values(1,	'Hansen',	'Ola',	'Timoteivn'	,'Sandnes'),
+(2,	'Svendson',	'Tove',	'Borgvn', 'Sandnes' ),
+(3,	'Pettersen'	,'Kari'	,'Storgt' ,'Stavanger');
+
+
 
 -- INSERTION
 INSERT INTO customers
@@ -48,6 +63,9 @@ JOIN clients c
 USING (client_id)
 WHERE payment_date IS NOT NULL;
 
+
+
+
 -- UPDATE
 UPDATE invoices
 SET payment_total =10, payment_date ='2019-03-01'
@@ -67,14 +85,15 @@ UPDATE customers
 SET points =points+50
 WHERE birth_date < '1990-01-01';
 
+
+
 -- UPDATE USING SUBQUERY
 USE sql_invoicing;
 UPDATE invoices 
 SET payment_total =invoice_total*2, payment_date = due_date
-WHERE client_id IN (
-SELECT client_id 
-FROM clients 
-WHERE state IN('CA','NY'));
+WHERE client_id IN (SELECT client_id 
+					FROM clients 
+					WHERE state IN('CA','NY'));
 
 
 
@@ -86,6 +105,51 @@ REPLACE INTO products(product_id,name,quantity_in_stock,unit_price)
 VALUES(14,'Product1' , 10 , 5.6);
 
 
+-- ALTER
+
+ALTER TABLE sql_store.persons
+CHANGE COLUMN PersonID PersonID INT NOT NULL AUTO_INCREMENT PRIMARY KEY;
+
+ALTER TABLE sql_store.persons
+ADD COLUMN country varchar(50);
+
+ALTER TABLE sql_store.Persons
+MODIFY COLUMN City varchar(100);
+
+-- try inseting into person_id
+INSERT INTO sql_store.`persons` (PersonID,LastName,FirstName,Address,City)
+VALUES (NULL,'Elladine','Rising','Social Worker','KO');
+
+
+
+-- INDEXING
+
+ALTER TABLE customers
+ADD INDEX idx_name(phone);
+
+ALTER TABLE customers
+ADD INDEX location(city,state);
+
+DROP INDEX idx_name ON customers;
+DROP INDEX location ON customers;
+
+
+-- FOREIGN KEY
+
+CREATE TABLE races ( 
+	race_id TINYINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+	race_name VARCHAR(30) NOT NULL 
+)ENGINE=INNODB; 
+    
+CREATE TABLE characters ( 
+	character_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY Key, 
+    character_name VARCHAR (50) NOT NULL, 
+    race_id TINYINT UNSIGNED NOT NULL, 
+    INDEX idx_race (race_id), 
+    CONSTRAINT fk_character_race 
+    FOREIGN KEY (race_id) 
+    REFERENCES races (race_id) ON UPDATE CASCADE ON DELETE RESTRICT
+    ) ENGINE=INNODB;
 
 -- DELETE KEYWORD
 -- DELETE invoices 

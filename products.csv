@@ -1,0 +1,15 @@
+product_id,name,quantity_in_stock,unit_price
+1,"Foam Dinner Plate",70,1.21
+2,"Pork - Bacon,back Peameal",49,4.65
+3,"Lettuce - Romaine, Heart",38,3.35
+4,"Brocolinni - Gaylan, Chinese",90,4.53
+5,"Sauce - Ranch Dressing",94,1.63
+6,"Petit Baguette",14,2.39
+7,"Sweet Pea Sprouts",98,3.29
+8,"Island Oasis - Raspberry",26,0.74
+9,Longan,67,2.26
+10,"Broom - Push",6,1.09
+11,Product1,10,1.95
+12,Product2,12,1.95
+13,Product3,13,1.95
+14,Product1,10,5.60
